@@ -24,6 +24,10 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.login-link {
+  margin-top: 1rem;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
