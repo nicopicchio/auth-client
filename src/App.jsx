@@ -2,6 +2,9 @@ import './App.css';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 
+const accessDeniedError = 'Access denied!'
+const somethingWrongError = 'Something went wrong!'
+const invalidCredentials = 'Invalid username or password!'
 const initialBodyState = {
 	username: '',
 	password: '',
@@ -34,7 +37,7 @@ export default function App() {
 			)
 			.then(setBody(initialBodyState))
 			.catch((err) => {
-				setNewUser('Something went wrong!');
+				setNewUser(somethingWrongError);
 			});
 	};
 
@@ -48,14 +51,14 @@ export default function App() {
 		})
 			.then((res) => res.json())
 			.then((jsonResponse) => {
-				if (jsonResponse === 'Access denied!') {
-					setNewUser('Invalid username or password!')
+				if (jsonResponse === accessDeniedError) {
+					setNewUser(invalidCredentials)
 				} else
 				setNewUser(`User token is: ${jsonResponse.token}`)
 			})
 			.then(setBody(initialBodyState))
 			.catch((err) => {
-				setNewUser('Something went wrong!');
+				setNewUser(somethingWrongError);
 			});
 	}
 
