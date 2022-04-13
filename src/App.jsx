@@ -2,9 +2,9 @@ import './App.css';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const accessDeniedError = 'Access denied!'
-const somethingWrongError = 'Something went wrong!'
-const invalidCredentials = 'Invalid username or password!'
+const accessDeniedError = 'Access denied!';
+const somethingWrongError = 'Something went wrong!';
+const invalidCredentials = 'Invalid username or password!';
 const initialBodyState = {
 	username: '',
 	password: '',
@@ -52,22 +52,21 @@ export default function App() {
 			.then((res) => res.json())
 			.then((jsonResponse) => {
 				if (jsonResponse === accessDeniedError) {
-					setNewUser(invalidCredentials)
-				} else
-				setNewUser(`User token is: ${jsonResponse.token}`)
+					setNewUser(invalidCredentials);
+				} else setNewUser(`User token is: ${jsonResponse.token}`);
+				localStorage.setItem('userToken', jsonResponse.token);
 			})
 			.then(setBody(initialBodyState))
 			.catch((err) => {
 				setNewUser(somethingWrongError);
 			});
-	}
+	};
 
 	const onFormSubmit = (e) => {
 		e.preventDefault();
 		if (!isLogin) {
-			registerFetch()
-		} else
-		loginFetch()
+			registerFetch();
+		} else loginFetch();
 	};
 
 	return (
@@ -100,9 +99,13 @@ export default function App() {
 					<br />
 					<input type='submit' />
 				</form>
-				<p>Already registered?</p>
+				<p>
+					{!isLogin && 'Already registered?'}
+					{isLogin && 'Not registered yet?'}
+				</p>
 				<p className='login-link' onClick={loadLoginForm}>
-					Login
+					{!isLogin && "Login"}
+					{isLogin && 'Register'}
 				</p>
 			</div>
 			<div>{newUser && <p className='registration-message'>{newUser}</p>}</div>
